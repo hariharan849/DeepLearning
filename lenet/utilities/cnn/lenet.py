@@ -1,4 +1,4 @@
-from keras.model import Sequential
+from keras.models import Sequential
 from keras.layers.convolutional import Conv2D, MaxPooling2D
 from keras.layers.core import Flatten, Dense, Activation
 from keras import backend as K
