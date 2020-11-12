@@ -1,5 +1,5 @@
 
-from utilities.cnn.lenet import Lenet
+from utilities.cnn.lenet import LeNet
 from keras.optimizers import SGD
 from sklearn.preprocessing import LabelBinarizer
 from sklearn.model_selection import train_test_split
