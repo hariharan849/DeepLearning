@@ -30,8 +30,8 @@ lb = LabelBinarizer()
 
 # Convert the labels from integers to vectors
 lb = LabelBinarizer()
-train_y = lb.fit_transform(train_y)
-test_y = lb.transform(test_y)
+trainLabels = lb.fit_transform(trainLabels)
+testLabels = lb.transform(testLabels)
 
 # Initialize the optimizer and model
 print("[INFO]: Compiling model....")
@@ -41,12 +41,12 @@ model.compile(loss="categorical_crossentropy", optimizer=optimizer, metrics=["ac
 
 # Train the network
 print("[INFO]: Training....")
-H = model.fit(train_x, train_y, validation_data=(test_x, test_y), batch_size=128, epochs=20, verbose=1)
+H = model.fit(trainData, trainLabels, validation_data=(testData, testLabels), batch_size=128, epochs=20, verbose=1)
 
 # Evaluate the network
 print("[INFO]: Evaluating....")
-predictions = model.predict(test_x, batch_size=128)
-print(classification_report(test_y.argmax(axis=1), predictions.argmax(axis=1), target_names=[str(x) for x in lb.classes_]))
+predictions = model.predict(testData, batch_size=128)
+print(classification_report(testLabels.argmax(axis=1), predictions.argmax(axis=1), target_names=[str(x) for x in lb.classes_]))
 
 odel_json = model.to_json()
 with open(os.path.join(file_path, "model.json"), "w") as json_file:
