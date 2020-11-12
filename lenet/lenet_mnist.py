@@ -48,7 +48,7 @@ print("[INFO]: Evaluating....")
 predictions = model.predict(testData, batch_size=128)
 print(classification_report(testLabels.argmax(axis=1), predictions.argmax(axis=1), target_names=[str(x) for x in lb.classes_]))
 
-odel_json = model.to_json()
+model_json = model.to_json()
 with open(os.path.join(file_path, "model.json"), "w") as json_file:
     json_file.write(model_json)
 # serialize weights to HDF5
