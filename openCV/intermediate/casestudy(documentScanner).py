@@ -35,3 +35,12 @@ for c in cnts:
 # show the contour (outline) of the piece of paper
 print("STEP 2: Find contours of paper")
 cv2.drawContours(image, [screenCnt], -1, (0, 255, 0), 2)
+
+
+
+
+
+
+
+
+

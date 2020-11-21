@@ -1,51 +1,65 @@
-"""
-Example to show how to draw circles using the mouse events in OpenCV
-"""
-
-# Import required packages:
 import cv2
-import numpy as np
+# Create a function based on a CV2 Event (Left button click)
 
-# Dictionary containing some colors:
-colors = {'blue': (255, 0, 0), 'green': (0, 255, 0), 'red': (0, 0, 255), 'yellow': (0, 255, 255),
-          'magenta': (255, 0, 255), 'cyan': (255, 255, 0), 'white': (255, 255, 255), 'black': (0, 0, 0),
-          'gray': (125, 125, 125), 'rand': np.random.randint(0, high=256, size=(3,)).tolist(),
-          'dark_gray': (50, 50, 50), 'light_gray': (220, 220, 220)}
+# mouse callback function
+def draw_rectangle(event,x,y,flags,param):
 
+    global pt1,pt2,topLeft_clicked,botRight_clicked
 
-# This is the mouse callback function:
-def draw_circle(event, x, y, flags, param):
-    if event == cv2.EVENT_LBUTTONDBLCLK:
-        print("event: EVENT_LBUTTONDBLCLK")
-        cv2.circle(image, (x, y), 10, colors['magenta'], -1)
-
-    if event == cv2.EVENT_MOUSEMOVE:
-        print("event: EVENT_MOUSEMOVE")
-
-    if event == cv2.EVENT_LBUTTONUP:
-        print("event: EVENT_LBUTTONUP")
-
+    # get mouse click
     if event == cv2.EVENT_LBUTTONDOWN:
-        print("event: EVENT_LBUTTONDOWN")
 
+        if topLeft_clicked == True and botRight_clicked == True:
+            topLeft_clicked = False
+            botRight_clicked = False
+            pt1 = (0,0)
+            pt2 = (0,0)
 
-# We create the canvas to draw: 600 x 600 pixels, 3 channels, uint8 (8-bit unsigned integers)
-# We set the background to black using np.zeros():
-image = np.zeros((600, 600, 3), dtype="uint8")
+        if topLeft_clicked == False:
+            pt1 = (x,y)
+            topLeft_clicked = True
+            
+        elif botRight_clicked == False:
+            pt2 = (x,y)
+            botRight_clicked = True
 
-# We create a named window where the mouse callback will be established:
-cv2.namedWindow('Image mouse')
+        
+# Haven't drawn anything yet!
 
-# We set the mouse callback function to 'draw_circle':
-cv2.setMouseCallback('Image mouse', draw_circle)
+pt1 = (0,0)
+pt2 = (0,0)
+topLeft_clicked = False
+botRight_clicked = False
+
+cap = cv2.VideoCapture(0,cv2.CAP_DSHOW) 
+
+# Create a named window for connections
+cv2.namedWindow('Test')
+
+# Bind draw_rectangle function to mouse cliks
+cv2.setMouseCallback('Test', draw_rectangle) 
+
 
 while True:
-    # Show image 'Image mouse':
-    cv2.imshow('Image mouse', image)
+    # Capture frame-by-frame
+    ret, frame = cap.read()
 
-    # Continue until 'q' is pressed:
-    if cv2.waitKey(20) & 0xFF == ord('q'):
+    if topLeft_clicked:
+        cv2.circle(frame, center=pt1, radius=5, color=(0,0,255), thickness=-1)
+        
+    #drawing rectangle
+    if topLeft_clicked and botRight_clicked:
+        cv2.rectangle(frame, pt1, pt2, (0, 0, 255), 2)
+        
+        
+    # Display the resulting frame
+    cv2.imshow('Test', frame)
+
+    # This command let's us quit with the "q" button on a keyboard.
+    # Simply pressing X on the window won't work!
+    if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
-# Destroy all generated windows:
+# When everything is done, release the capture
+cap.release()
 cv2.destroyAllWindows()
