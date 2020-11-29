@@ -1,5 +1,5 @@
 import numpy as np
-from google.colab.patches import cv2_imshow
+#from google.colab.patches import cv2_imshow
 import cv2
 
 BLUE = [255,0,0]
@@ -18,3 +18,4 @@ reflect101 = cv2.copyMakeBorder(img1,10,10,10,10,cv2.BORDER_REFLECT_101)
 wrap = cv2.copyMakeBorder(img1,10,10,10,10,cv2.BORDER_WRAP)
 constant= cv2.copyMakeBorder(img1,10,10,10,10,cv2.BORDER_CONSTANT,value=BLUE)
 
+cv2.imshow(constant)

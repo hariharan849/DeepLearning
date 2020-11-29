@@ -3,12 +3,12 @@ Example to introduce how to read a video file backwards
 """
 
 # Import the required packages:
-from google.colab.patches import cv2_imshow
+# from google.colab.patches import cv2_imshow
 import cv2
 
 # Create a VideoCapture object and read from input file
 # If the input is the camera, pass 0 instead of the video file name
-capture = cv2.VideoCapture("test.avi")
+capture = cv2.VideoCapture(r"D:\movies\Abominable.2019.1080p.BluRay.YTS.mp4",cv2.CAP_DSHOW)
 
 # Check if camera opened successfully:
 if capture.isOpened()is False:

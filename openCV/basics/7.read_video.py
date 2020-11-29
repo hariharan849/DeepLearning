@@ -8,6 +8,9 @@ cap = cv2.VideoCapture(0,cv2.CAP_DSHOW)
 width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
 height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
+print (cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+print (cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+
 # We're using // here because in Python // allows for int classical division, 
 # because we can't pass a float to the cv2.rectangle function
 
