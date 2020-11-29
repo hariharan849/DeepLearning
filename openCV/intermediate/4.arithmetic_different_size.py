@@ -26,9 +26,9 @@ mask_inv = cv2.bitwise_not(mask)
 
 #form bg and fg
 image_1_bg = cv2.bitwise_and(roi, roi, mask=mask_inv)
-image_2_bg = cv2.bitwise_and(image_2, image_2, mask=mask)
+image_2_fg = cv2.bitwise_and(image_2, image_2, mask=mask)
 
-dst = cv2.add(image_1_bg, image_2_bg)
+dst = cv2.add(image_1_bg, image_2_fg)
 image_1[0:rows, 0:cols] = dst
 
 cv2_imshow(image_1)

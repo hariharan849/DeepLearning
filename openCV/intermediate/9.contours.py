@@ -31,7 +31,7 @@ def build_sample_image():
 
 
 # Load the image and convert it to grayscale:
-image = build_sample_image_2()
+image = build_sample_image()
 gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
 # Apply cv2.threshold() to get a binary image:
