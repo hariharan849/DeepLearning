@@ -1,0 +1,24 @@
+Basics:
+	Image Reading, writing
+	Video Reading, writing
+	basic shapes
+	keyboard input mouse input
+	
+Intermediate
+	Thresholding, arithmetic operation
+	LPF, HPF
+	Contours, histograms
+	Casestudy
+		document scanner
+		shape detection
+		
+Advanced
+	Feature detection
+	Templates
+	mediapipe
+	Object detection
+	seamless carving
+	casestudy
+		snapchat filter
+		sudoku solver
+	
