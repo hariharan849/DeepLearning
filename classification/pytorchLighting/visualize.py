@@ -19,16 +19,22 @@ from torchvision import transforms
 warnings.filterwarnings("ignore")
 
 class Visualize:
-  def __init__(self, image_dataset_folder):
+  def __init__(self, image_dataset_folder: str):
+    """Initializes the Visualize class with the image dataset folder
+    Args:
+        image_dataset_folder (str): Path to the image dataset folder
+    """
     self._image_dataset_folder = image_dataset_folder
     self._dataframe = self.create_dataframe_from_image_folder()
 
   def create_dataframe_from_image_folder(self):
+    """ Creates a DataFrame from the image dataset folder
+    """
     # List to store data
     data = []
 
     # Walk through train, validation, and test folders
-    for split in ['train', 'validation', 'test']:
+    for split in ['train', 'val', 'test']:
         split_folder = os.path.join(self._image_dataset_folder, split)
         for class_name in os.listdir(split_folder):
             class_folder = os.path.join(split_folder, class_name)

@@ -8,26 +8,38 @@ Original file is located at
 """
 
 import pandas as pd
-import os
+import os, copy
 import cv2
 import matplotlib.pyplot as plt
 from matplotlib.patches import Wedge
 from matplotlib.patheffects import withStroke
 import seaborn as sns
 import warnings
+from torchvision import transforms
 warnings.filterwarnings("ignore")
 
 class Visualize:
-  def __init__(self, image_dataset_folder):
+  """A class for visualizing image datasets."""
+
+  def __init__(self, image_dataset_folder: str):
+    """Initializes the Visualize class with the image dataset folder
+    Args:
+        image_dataset_folder (str): Path to the image dataset folder
+    """
     self._image_dataset_folder = image_dataset_folder
     self._dataframe = self.create_dataframe_from_image_folder()
 
   def create_dataframe_from_image_folder(self):
+    """Creates a DataFrame from the image dataset folder.
+    
+    Returns:
+        pd.DataFrame: DataFrame containing image paths, splits, and labels.
+    """
     # List to store data
     data = []
 
     # Walk through train, validation, and test folders
-    for split in ['train', 'validation', 'test']:
+    for split in ['train', 'val', 'test']:
         split_folder = os.path.join(self._image_dataset_folder, split)
         for class_name in os.listdir(split_folder):
             class_folder = os.path.join(split_folder, class_name)
@@ -45,8 +57,7 @@ class Visualize:
     return df
 
   def plot_class_distribution_in_pie_chart(self):
-    """ Plots dataset label distribution in pie chart
-    """
+    """Plots dataset label distribution in a pie chart."""
     # Assuming your data is in a pandas DataFrame called 'train_df'
     animals_counts = self._dataframe['labels'].value_counts()
 
@@ -73,8 +84,7 @@ class Visualize:
     plt.show()
 
   def plot_class_distribution_in_count_chart(self):
-      """ Plots dataset label distribution in bar chart
-      """
+      """Plots dataset label distribution in a bar chart."""
       #count Plot
 
       plt.figure(figsize=(8, 6))
@@ -92,7 +102,10 @@ class Visualize:
       plt.show()
 
   def plot_random_images_per_class(self, no_images:int=2):
-      """ Plots images per label distribution
+      """Plots random images per label distribution.
+      
+      Args:
+          no_images (int): Number of images to plot per class.
       """
       class_names = self._dataframe["labels"].unique()
       random_images = self._dataframe.sample(frac=1).sort_values(by="labels").groupby('labels').head(no_images)
@@ -111,8 +124,7 @@ class Visualize:
           plt.title(class_name)
 
   def plot_percentage_split(self):
-      """ Plots dataset split distribution in pie chart
-      """
+      """Plots dataset split distribution in a pie chart."""
       split_distribution = self._dataframe['split'].value_counts()
       colors = ['#66c2a5', '#fc8d62', '#8da0cb']
     
@@ -129,3 +141,23 @@ class Visualize:
       plt.title('Dataset Split Distribution', fontsize=16)
       plt.axis('equal')  # Equal aspect ratio ensures the pie chart is circular.
       plt.show()
+
+def visualize_augmentations(dataset, idx=0, samples=10, cols=5):
+    """View the augmented images.
+    
+    Args:
+        dataset: The dataset to visualize augmentations from.
+        idx (int): Index of the image to visualize.
+        samples (int): Number of samples to visualize.
+        cols (int): Number of columns in the plot.
+    """
+    dataset = copy.deepcopy(dataset)
+    dataset._transforms = transforms.Compose([t for t in dataset.transform.transforms if not isinstance(t, (transforms.Normalize, transforms.ToTensor))])
+    rows = samples // cols
+    figure, ax = plt.subplots(nrows=rows, ncols=cols, figsize=(12, 6))
+    for i in range(samples):
+        image, _ = dataset[idx]
+        ax.ravel()[i].imshow(image.permute(1, 2, 0))
+        ax.ravel()[i].set_axis_off()
+    plt.tight_layout()
+    plt.show()
