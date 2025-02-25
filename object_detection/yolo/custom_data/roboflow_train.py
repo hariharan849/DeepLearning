@@ -22,7 +22,7 @@ from ultralytics import YOLO
 # """
 
 
-rf = roboflow.Roboflow(api_key="6MwuxEBPFcyJT3HuFU9h")
-project = rf.workspace("learn-kop3c").project("anpr-wpigd-1rlbq")
+rf = roboflow.Roboflow(api_key="####")
+project = rf.workspace("learn-kop3c").project("####")
 version = project.version(1)
 dataset = version.download("yolov11")
