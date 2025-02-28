@@ -1,7 +1,7 @@
 import time, requests
 import streamlit as st
 from bs4 import BeautifulSoup
-from langchain_openai import ChatOpenAI
+from langchain_groq import ChatGroq
 from langchain.prompts import PromptTemplate
 from langgraph.graph import StateGraph, END
 from docx import Document
@@ -10,7 +10,8 @@ import fitz  # PyMuPDF for PDFs
 import os
 from difflib import unified_diff, HtmlDiff
 from difflib import ndiff
-
+from dotenv import load_dotenv
+load_dotenv()
 temp_dir = "temp_files"
 os.makedirs(temp_dir, exist_ok=True)
 
@@ -18,7 +19,7 @@ os.makedirs(temp_dir, exist_ok=True)
 job_description = None
 
 # Set up LLM
-llm = ChatOpenAI(model_name="gpt-4o-mini", temperature=0.7)
+llm = ChatGroq(model_name="gemma2-9b-it", temperature=0.7)
 
 def rebuild_resume_with_format(updated_text, formatting, file_type):
     file_path = os.path.join(temp_dir, f"updated_resume.{file_type}")

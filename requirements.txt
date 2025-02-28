@@ -1,12 +1,17 @@
 langchain
+streamlit
+langgraph
 python-dotenv
 langchain-openai
+python-docx
+python-pptx
 langchain-core
 langchain-community
 bs4
 faiss-cpu
 pypdf
 arxiv
+pymupdf
 wikipedia
 lxml
 pymupdf
