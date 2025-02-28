@@ -17,3 +17,5 @@ lxml
 pymupdf
 langchain_huggingface
 langchain-groq
+pytube
+youtube-transcript-api
