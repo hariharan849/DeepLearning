@@ -1,3 +1,17 @@
-.streamlit/secrets.toml
+# Ignore environment variables & secrets
 .env
-.devcontainer
+.secrets.toml
+/.streamlit/secrets.toml
+config.json
+
+# Ignore Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore compiled files
+*.so
+*.o
+*.out
+*.a
