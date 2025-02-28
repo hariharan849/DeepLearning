@@ -16,8 +16,10 @@ temp_dir = "temp_files"
 os.makedirs(temp_dir, exist_ok=True)
 
 # Retrieve LangChain API Key securely
-LANGCHAIN_API_KEY = os.getenv("LANGCHAIN_API_KEY")
-GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+LANGCHAIN_API_KEY = st.secrets["LANGCHAIN_API_KEY"]
+os.environ["LANGCHAIN_API_KEY"] = LANGCHAIN_API_KEY
+GROQ_API_KEY = st.secrets["GROQ_API_KEY"]
+os.environ("GROQ_API_KEY")
 
 # Set up LLM
 llm = ChatGroq(model_name="gemma2-9b-it", temperature=0.7, api_key=GROQ_API_KEY)
