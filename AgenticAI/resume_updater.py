@@ -15,6 +15,9 @@ load_dotenv()
 temp_dir = "temp_files"
 os.makedirs(temp_dir, exist_ok=True)
 
+# Retrieve LangChain API Key securely
+LANGCHAIN_API_KEY = os.getenv("LANGCHAIN_API_KEY")
+GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
 # Set up LLM
 llm = ChatGroq(model_name="gemma2-9b-it", temperature=0.7)
@@ -240,12 +243,15 @@ if uploaded_resume is not None:
 job_url = st.text_input("Paste the job listing URL")
 
 if "job_url" not in st.session_state:
-    st.session_state.job_url = job_url
+    st.session_state.job_url = None
+
+st.session_state.job_url = job_url
 
 if "job_description" not in st.session_state:
     st.session_state.job_description = None
 
 if st.button("Fetch Job Description") and st.session_state.job_url:
+    print()
     job_description = fetch_job_description_from_llm(st.session_state.job_url)
     if job_description:
         st.session_state.job_description = job_description.content  # Store in session state
