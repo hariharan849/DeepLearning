@@ -16,8 +16,6 @@ temp_dir = "temp_files"
 os.makedirs(temp_dir, exist_ok=True)
 
 
-job_description = None
-
 # Set up LLM
 llm = ChatGroq(model_name="gemma2-9b-it", temperature=0.7)
 
@@ -226,6 +224,19 @@ st.title("Resume Comparison against Job Description")
 st.write("This tool helps you optimize your resume by comparing it against a job description and identifying key gaps.")
 
 uploaded_resume = st.file_uploader("Upload your resume (Word, PPT, or PDF)", type=["docx", "pptx", "pdf"])
+# Display information about the uploaded file
+if uploaded_resume is not None:
+    st.session_state.otto_file = uploaded_resume
+    st.header("Uploaded File Details:")
+
+    # Display file type and size
+    file_details = {
+        "File Name": uploaded_resume.name,
+        "File Type": uploaded_resume.type,
+        "File Size (bytes)": uploaded_resume.size,
+    }
+    st.write(file_details)
+
 job_url = st.text_input("Paste the job listing URL")
 
 if "job_description" not in st.session_state:
@@ -234,12 +245,12 @@ if "job_description" not in st.session_state:
 if st.button("Fetch Job Description") and job_url:
     job_description = fetch_job_description_from_llm(job_url)
     if job_description:
-        st.session_state.job_description = job_description  # Store in session state
+        st.session_state.job_description = job_description.content  # Store in session state
         st.success("Job description fetched successfully!")
 
 if st.session_state.job_description:
     st.subheader("Extracted Job Description")
-    st.text_area("Job Description", st.session_state.job_description.content, height=300)
+    st.text_area("Job Description", st.session_state.job_description, height=300)
 
 if st.button("Optimize Resume") and uploaded_resume and st.session_state.job_description:
     file_type = uploaded_resume.name.split(".")[-1]
@@ -248,7 +259,7 @@ if st.button("Optimize Resume") and uploaded_resume and st.session_state.job_des
     if not resume_text:
         st.error("Unsupported file type or extraction error.")
     else:
-        state = {"resume": resume_text, "job_description": job_description, "formatting": formatting, "file_type": file_type}
+        state = {"resume": resume_text, "job_description": st.session_state.job_description, "formatting": formatting, "file_type": file_type}
         output = graph.invoke(state)
         
         st.subheader("Identified Resume Gaps:")
