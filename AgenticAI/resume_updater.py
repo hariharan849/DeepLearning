@@ -239,11 +239,14 @@ if uploaded_resume is not None:
 
 job_url = st.text_input("Paste the job listing URL")
 
+if "job_url" not in st.session_state:
+    st.session_state.job_url = job_url
+
 if "job_description" not in st.session_state:
     st.session_state.job_description = None
 
-if st.button("Fetch Job Description") and job_url:
-    job_description = fetch_job_description_from_llm(job_url)
+if st.button("Fetch Job Description") and st.session_state.job_url:
+    job_description = fetch_job_description_from_llm(st.session_state.job_url)
     if job_description:
         st.session_state.job_description = job_description.content  # Store in session state
         st.success("Job description fetched successfully!")
