@@ -1,0 +1,9 @@
+arxiv
+beautifulsoup4
+langchain
+langchain_community
+langchain_ollama
+streamlit
+strictyaml
+langchain_google_genai
+graphviz

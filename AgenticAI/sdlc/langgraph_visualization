@@ -1,0 +1,9 @@
+digraph {
+	generate_user_stories
+	review_user_story
+	refine_rejected_stories
+	generate_user_stories -> review_user_story
+	refine_rejected_stories -> review_user_story
+	__start__ -> generate_user_stories
+	review_user_story -> __end__
+}

@@ -1,0 +1,17 @@
+PAGE_TITLE: "LangGraph: Build SDLC using llm"
+LLM_OPTIONS: 
+  - "Ollama"
+  - "Groq"
+USECASE_OPTIONS: 
+  - "Product Owner"
+  - "Designer"
+  - "Developer"
+  - "Security"
+  - "Unit Test"
+GROQ_MODEL_OPTIONS:
+  - "mixtral-8x7b-32768"
+  - "llama3-8b-8192"
+  - "llama3-70b-8192"
+  - "gemma2-9b-it"
+OLLAMA_MODEL_OPTIONS:
+  - "llama3.2:1b"

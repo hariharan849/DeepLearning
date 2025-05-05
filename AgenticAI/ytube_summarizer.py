@@ -3,6 +3,7 @@ import streamlit as st
 from dotenv import load_dotenv
 from youtube_transcript_api import YouTubeTranscriptApi
 from langchain_groq import ChatGroq
+from langchain_ollama import ChatOllama
 from langgraph.graph import StateGraph
 from typing import Dict, TypedDict, Annotated
 
@@ -10,8 +11,8 @@ from typing import Dict, TypedDict, Annotated
 load_dotenv()
 
 # Initialize LLM models
-llm = ChatGroq(model_name="gemma2-9b-it", temperature=0.7)
-code_llm = ChatGroq(model_name="mixtral-8x7b-32768", temperature=0.7)
+llm = ChatOllama(model="llama3.2:1b", temperature=0.7)
+code_llm = ChatOllama(model="llama3.2:1b", temperature=0.7)
 
 # Define state schema
 class VideoState(TypedDict):
